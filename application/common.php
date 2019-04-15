@@ -10,10 +10,11 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
-define("HOST", "http://localhost");
-define("STATIC_PATH", HOST."/friend/public/static");
-define("USER_ALBUM", HOST.STATIC_PATH."/upload/userAlbum");
-define("UPLOAD_IMG_TEMP", HOST.STATIC_PATH."/upload_img_temp");
+define("HOST", "http://lidongxu.d1.natapp.cc");
+define("STATIC_PATH", HOST."/tianluo/public/static");
+define("STATIC_IMG", STATIC_PATH."/img");
+define("USER_ALBUM", STATIC_PATH."/upload/userAlbum");
+define("UPLOAD_IMG_TEMP", STATIC_PATH."/upload_img_temp");
 // 分页每页数据条数
 define("PAGE_COUNT", 10);
 // 超时秒数
@@ -22,5 +23,5 @@ define("TIME_OUT", 60);
 define("CODE_OUT", 60);
 // 验证码有效期
 define("CODE_VEOUT", 600);
-// 登录状态过期时间(秒)
+// 登录状态过期时间(秒) (24小时)
 define("LOGIN_OUT_TIME", 86400);

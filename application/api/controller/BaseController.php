@@ -24,7 +24,7 @@ class BaseController extends Controller
     function __construct()
     {
         parent::__construct();
-//        $this->checkApiAuth();
+        $this->checkApiAuth();
         // 只要传了uid的接口, 都验证jwt, 没传uid就无需验证
         if ($this->getParam("uid") != null) {
             $this->checkLoginAuth();
@@ -63,7 +63,7 @@ class BaseController extends Controller
     public function checkApiAuth()
     {
         // 从HTTP头部取出AuthCode
-        // 前端传递AuthCode (由key+/+时间戳)再用公钥RSA加密得来的
+        // 前端传递AuthCode (由key+/+时间戳+/+uuid)再用公钥RSA加密得来的
         $header = new Request();
         $res = Auth::checkApiUseCode($header->header('AuthCode'));
         if (is_string($res)) {

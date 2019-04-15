@@ -82,4 +82,13 @@ EOD;
         }
         return $data;
     }
+    
+    // 私钥加密
+    public static function privateCode(){
+        $pi_key = openssl_pkey_get_private(RSA::$privateKey);
+        openssl_private_encrypt(RSA::$key, $data, $pi_key);
+        $data = base64_encode($data);
+        return $data;
+    }
+    
 }
