@@ -45,11 +45,25 @@ class BaseController extends Controller
             if ($arg == null || $arg == "") {
                 return null;
             }
+            // 如果是数组的话
+            // 为了model赋值方便, 前端使用驼峰 myName, 后端使用my_name, 利用正则, 把每个参数名修改一下
+            if (is_array($arg)){
+                foreach ($arg as $key=>$val){
+                    $v = $val;
+                    unset($arg[$key]);
+                    $arg[strtolower(preg_replace('/(?<=[a-z])([A-Z])/', '_$1', $key))] = $v;
+                    
+                }
+                return $arg;
+            }
             
             if (is_null(json_decode($arg, true))) {
                 return $arg;
             }
-            return json_decode($arg, true);
+            
+            // 说明是JSON格式字符串
+            $arr = json_decode($arg, true);
+            return $arr;
         } else {
             return "";
         }
