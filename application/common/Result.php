@@ -51,6 +51,8 @@ class Result
     public static function success($data = [], $msg = '')
     {
         $data = Common::replaceNullData($data);
+        // 把下划线都转成驼峰标识
+        $data = Common::changeHumpData($data);
         return json_encode(['result' => self::SUCCESS, 'data' => empty($data) ? "" : $data, 'msg' => $msg, 'now' => Date::time()]);
     }
    
