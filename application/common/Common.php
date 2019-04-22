@@ -65,6 +65,29 @@ class Common
         return $arr;
     }
     
+    // 把下划线转成驼峰标识
+    public static function changeHumpData($arr)
+    {
+        // 是对象型数组, 不是关联数组, 需要转成array
+        if (!is_array($arr)) {
+            $arr = $arr->toArray();
+        }
+        foreach ($arr as $key => $val) {
+            // 如果还是数组/对象则递归调用方法, 执行一遍
+            if (is_array($val) || is_object($val)) {
+                $arr[$key] = Common::changeHumpData($val);
+            } else {
+                $v = $val;
+                unset($arr[$key]);
+                $arr[preg_replace_callback('/_+([a-z])/', function ($matches) {
+                    return strtoupper($matches[1]);
+                }, $key)] = $v;
+                
+            }
+        }
+        return $arr;
+    }
+    
     
     // GET网络请求
     public static function httpGet($url)
@@ -145,7 +168,8 @@ class Common
     
     
     // 返回必要字段检测
-    public static function getNecessaryKey(){
+    public static function getNecessaryKey()
+    {
         // status 数据有效为1
         // 有些表查询 需要设置有效值校验
         return array(
@@ -153,4 +177,17 @@ class Common
         );
     }
     
+    // 计算用户身份
+    public static function calUserRoleTitle($state)
+    {
+        // 账号身份(0超级管理员1渠道管理员2普通渠道员3咨询管理员4普通咨询师5财务管理员6财务7职规管理员8普通职规师9代理管理员10普通代理员11企业顾问管理员12企业顾问13讲师管理员14普通讲师)
+        return STATE_ARR[$state]['value'];
+    }
+    
+    // 计算用户权限(用于前端动态路由)
+    public static function calUserRoles($state)
+    {
+        $arr = STATE_ARR;
+        return [$arr[$state]['role']];
+    }
 }
